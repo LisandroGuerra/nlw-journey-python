@@ -11,7 +11,7 @@ trip_id = str(uuid.uuid4())
 
 
 @pytest.mark.skip(reason='Database interaction test')
-def test_registry_email():
+def test_email_register():
     conn = db_connection_handler.get_connection()
     emails_to_invite_repository = EmailsToInviteRepository(conn)
 
@@ -21,7 +21,7 @@ def test_registry_email():
         'email': fake.email()
     }
 
-    emails_to_invite_repository.registry_email(email_trip_info)
+    emails_to_invite_repository.email_register(email_trip_info)
 
 
 @pytest.mark.skip(reason='Database interaction test')
