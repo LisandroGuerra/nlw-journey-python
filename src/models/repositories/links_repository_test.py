@@ -31,3 +31,6 @@ def test_find_links_by_trip_id():
     links_repository = LinksRepository(conn)
 
     trip_links = links_repository.find_links_by_trip_id(trip_id)
+
+    assert isinstance(trip_links, list)
+    assert isinstance(trip_links[0], tuple)

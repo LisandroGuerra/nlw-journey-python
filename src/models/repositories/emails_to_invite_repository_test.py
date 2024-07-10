@@ -30,3 +30,6 @@ def test_find_emails_by_trip_id():
     emails_to_invite_repository = EmailsToInviteRepository(conn)
 
     emails = emails_to_invite_repository.find_emails_by_trip_id(trip_id)
+
+    assert isinstance(emails, list)
+    assert isinstance(emails[0], tuple)
