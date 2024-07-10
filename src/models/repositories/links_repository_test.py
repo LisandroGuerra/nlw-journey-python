@@ -18,7 +18,8 @@ def test_link_register():
     link_trip_info = {
         'id': str(uuid.uuid4()),
         'trip_id': trip_id,
-        'link': fake.url()
+        'link': fake.url(),
+        'title': fake.sentence()
     }
 
     links_repository.link_register(link_trip_info)
