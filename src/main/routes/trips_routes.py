@@ -6,7 +6,9 @@ trips_routes_bp = Blueprint('trip_routes', __name__)
 from src.controllers.trip_creator_controller import TripCreatorController
 from src.controllers.trip_finder_controller import TripFinderController
 from src.controllers.trip_confirmer_controller import TripConfirmerController
+
 from src.controllers.link_creator_controller import LinkCreatorController
+from src.controllers.link_finder_controller import LinkFinderController
 
 #Repositories import
 from src.models.repositories.trips_repository import TripsRepository
@@ -59,5 +61,16 @@ def create_trip_link(trip_id):
     controller = LinkCreatorController(links_repository)
 
     response = controller.create_link(request.json, trip_id)
+
+    return jsonify(response['body']), response['status_code']
+
+
+@trips_routes_bp.route('/trips/<trip_id>/links', methods=['GET'])
+def get_trip_links(trip_id):
+    conn = db_connection_handler.get_connection()
+    links_repository = LinksRepository(conn)
+    controller = LinkFinderController(links_repository)
+
+    response = controller.get_links(trip_id)
 
     return jsonify(response['body']), response['status_code']
