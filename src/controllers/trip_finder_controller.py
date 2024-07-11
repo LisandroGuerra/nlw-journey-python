@@ -1,5 +1,3 @@
-
-
 class TripFinderController:
     def __init__(self, trips_repository):
         self.__trips_repository = trips_repository
