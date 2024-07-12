@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, render_template_string
 
 trips_routes_bp = Blueprint('trip_routes', __name__)
 
@@ -52,11 +52,21 @@ def get_trip(trip_id):
     return jsonify(response['body']), response['status_code']
 
 
-@trips_routes_bp.route('/trips/<trip_id>/confirm', methods=['PATCH'])
+@trips_routes_bp.route('/trips/<trip_id>/confirm', methods=['PATCH', 'GET'])
 def confirm_trip(trip_id):
     conn = db_connection_handler.get_connection()
     trips_repository = TripsRepository(conn)
     controller = TripConfirmerController(trips_repository)
+
+    if request.method == 'GET':
+        html_template = '''
+        <html>
+            <body>
+                <h1> Trip confirmed !</h1>
+            </body>
+        </html>
+        '''
+        return html_template
 
     response = controller.confirm_trip(trip_id)
 
@@ -108,11 +118,22 @@ def get_trip_participants(trip_id):
     return jsonify(response['body']), response['status_code']
 
 
-@trips_routes_bp.route('/participants/<participant_id>/confirm', methods=['PATCH'])
+@trips_routes_bp.route('/participants/<participant_id>/confirm', methods=['PATCH', 'GET'])
 def confirm_participant(participant_id):
     conn = db_connection_handler.get_connection()
     participants_repository = ParticipantsRepository(conn)
     controller = ParticipantConfirmerController(participants_repository)
+
+    if request.method == 'GET':
+        html_template = '''
+            <html>
+                <body>
+                    <h1> Participant confirmed !</h1>
+                </body>
+            </html>
+        '''
+        return html_template
+    
 
     response = controller.confirm_participant(participant_id)
 

@@ -1,4 +1,5 @@
 import uuid
+from src.drivers.email_sender import send_email
 
 class TripCreatorController:
     def __init__(self, trip_repository, emails_repository) -> None:
@@ -21,6 +22,15 @@ class TripCreatorController:
                         'trip_id': trip_id,
                         'email': email
                     })
+
+            confirmation_url = f'http://0.0.0.0:5000/trips/{trip_id}/confirm'
+
+            send_email([body['owner_email']], 
+                f'''
+                You have been invited to a trip!
+                Please confirm your presence by clicking on the link below:
+                <a href="{confirmation_url}"> CONFIRM </a>
+                ''')
 
             return {
                 'body': {'id': trip_id},
