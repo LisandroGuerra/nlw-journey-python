@@ -6,9 +6,9 @@ class LinkFinderController:
         try:
             links = self.__links_repository.find_links_by_trip_id(trip_id)
             
-            formated_links = []
+            links_info = []
             for link in links:
-                formated_links.append({
+                links_info.append({
                     'id': link[0],
                     'url': link[2],
                     'title': link[3]
@@ -16,7 +16,7 @@ class LinkFinderController:
 
             return {
                 'body': {
-                    'links': formated_links
+                    'links': links_info
                 },
                 'status_code': 200
             }
